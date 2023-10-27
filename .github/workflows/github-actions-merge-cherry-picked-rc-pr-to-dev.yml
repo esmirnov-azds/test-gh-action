@@ -1,0 +1,37 @@
+name: On merging *-rc PR create and if no conflicts merge cherry-picked commits to dev
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  rc-cherry-picked:
+    if: github.event.pull_request.base.ref.endswith('-rc') && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create new branch and cherry-pick commits
+        run: |
+          git checkout -b ${{ github.head_ref }}-to-dev-gh-action
+          git cherry-pick ${{ github.event.pull_request.merge_commit_sha }}
+      - name: Create PR to dev
+        uses: peter-evans/create-pull-request@v3
+        with:
+          base: dev
+          head: ${{ github.head_ref }}-to-dev-gh-action
+          title: Cherry-picked ${{ github.head_ref }} merge commit to dev
+          body: Automatically created PR from cherry-picked commits.
+      - name: Check for merge conflicts
+        uses: olivernybroe/action-conflict-finder@v4
+        with:
+          base: dev
+          head: ${{ github.head_ref }}-to-dev-gh-action
+      - name: Auto-merge PR to dev
+        uses: pascalgn/automerge-action@v0.15.6
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_LABELS: auto-merge
+          MERGE_METHOD: squash
+          MERGE_COMMIT_MESSAGE: "Auto merge PR from ${{ github.head_ref }}\n\n${{ github.event.commits[0].message }}"
+          MERGE_FORKS: false
+          UPDATE_LABELS: auto-merge
