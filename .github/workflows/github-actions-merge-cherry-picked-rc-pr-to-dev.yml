@@ -4,29 +4,26 @@ on:
     types: [closed]
 
 jobs:
-  rc-cherry-picked:
+  after-rc-merged:
     if: ${{ contains(github.event.pull_request.base.ref, '-rc') && github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-        with:
-          ref: dev
       - name: Set git user
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-      - name: Create new branch and cherry-pick commits
+      - name: Create new branch
         run: |
           git checkout -b ${{ github.head_ref }}-to-dev-gh-action
-          git cherry-pick ${{ github.event.pull_request.merge_commit_sha }}
       - name: Create PR to dev
         uses: peter-evans/create-pull-request@v3
         with:
           base: dev
           head: ${{ github.head_ref }}-to-dev-gh-action
-          title: Cherry-picked ${{ github.head_ref }} merge commit to dev
-          body: Automatically created PR from cherry-picked commits.
+          title: ${{ github.head_ref }} to dev
+          body: Automatically created PR after merge to *-rc.
       - name: Check for merge conflicts
         uses: olivernybroe/action-conflict-finder@v4.0
         with:
@@ -38,6 +35,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_LABELS: auto-merge
           MERGE_METHOD: squash
-          MERGE_COMMIT_MESSAGE: "Auto merge PR from ${{ github.head_ref }}\n\n${{ github.event.commits[0].message }}"
+          MERGE_COMMIT_MESSAGE: "Auto PR from ${{ github.head_ref }}"
           MERGE_FORKS: false
           UPDATE_LABELS: auto-merge
