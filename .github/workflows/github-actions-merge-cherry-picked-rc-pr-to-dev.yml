@@ -22,7 +22,7 @@ jobs:
           title: Cherry-picked ${{ github.head_ref }} merge commit to dev
           body: Automatically created PR from cherry-picked commits.
       - name: Check for merge conflicts
-        uses: olivernybroe/action-conflict-finder@v4
+        uses: olivernybroe/action-conflict-finder@v4.0
         with:
           base: dev
           head: ${{ github.head_ref }}-to-dev-gh-action
