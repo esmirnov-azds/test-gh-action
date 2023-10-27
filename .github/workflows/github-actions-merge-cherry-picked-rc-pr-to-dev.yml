@@ -18,7 +18,6 @@ jobs:
         run: |
           git checkout -b ${{ github.head_ref }}-to-dev-gh-action
           git push origin ${{ github.head_ref }}-to-dev-gh-action
-          git checkout dev
       - name: Create PR to dev
         uses: peter-evans/create-pull-request@v5
         with:
