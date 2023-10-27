@@ -38,3 +38,5 @@ jobs:
           MERGE_COMMIT_MESSAGE: "Auto PR from ${{ github.head_ref }}"
           MERGE_FORKS: false
           UPDATE_LABELS: auto-merge
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
