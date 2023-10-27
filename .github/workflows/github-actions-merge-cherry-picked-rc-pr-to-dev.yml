@@ -1,4 +1,4 @@
-name: On merging *-rc PR create and if no conflicts merge cherry-picked commits to dev
+name: On merging *-rc PR create branch and if no conflicts merge to dev
 on:
   pull_request:
     types: [closed]
