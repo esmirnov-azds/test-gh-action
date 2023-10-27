@@ -22,6 +22,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           base: dev
+          head: ${{ github.head_ref }}-to-dev-gh-action
           title: GH Action ${{ github.head_ref }} to dev
           body: Automatically created PR after merge to ${{ github.base_ref }}.
       - name: Check for merge conflicts
