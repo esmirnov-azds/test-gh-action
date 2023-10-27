@@ -22,8 +22,8 @@ jobs:
         with:
           base: dev
           head: ${{ github.head_ref }}-to-dev-gh-action
-          title: ${{ github.head_ref }} to dev
-          body: Automatically created PR after merge to *-rc.
+          title: GH Action ${{ github.head_ref }} to dev
+          body: Automatically created PR after merge to ${{ github.base_ref }}.
       - name: Check for merge conflicts
         uses: olivernybroe/action-conflict-finder@v4.0
         with:
