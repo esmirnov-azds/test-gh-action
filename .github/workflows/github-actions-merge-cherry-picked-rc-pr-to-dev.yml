@@ -16,6 +16,7 @@ jobs:
           git config user.email "actions@github.com"
       - name: Create new branch and cherry-pick commits
         run: |
+          git checkout dev
           git checkout -b ${{ github.head_ref }}-to-dev-gh-action
           git cherry-pick ${{ github.event.pull_request.merge_commit_sha }}
       - name: Create PR to dev
