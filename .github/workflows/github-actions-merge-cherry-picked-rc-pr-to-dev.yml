@@ -11,7 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
         with:
-          ref: my-branch
+          ref: dev
       - name: Set git user
         run: |
           git config user.name "GitHub Actions"
