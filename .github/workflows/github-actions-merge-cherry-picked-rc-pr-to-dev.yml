@@ -15,7 +15,7 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
       - name: Create PR
-        uses: poorva17/create-pr-action@2.0
+        uses: poorva17/create-pr-action@v2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HEAD_BRANCH: ${{ github.base_ref }}
