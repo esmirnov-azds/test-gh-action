@@ -14,30 +14,10 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-      - name: Create new branch
-        run: |
-          git checkout -b ${{ github.head_ref }}-to-dev-gh-action
-          git push origin ${{ github.head_ref }}-to-dev-gh-action
       - name: Create PR to dev
         uses: peter-evans/create-pull-request@v5
         with:
-          base: ${{ github.head_ref }}-to-dev-gh-action
+          base: ${{ github.head_ref }}
           branch: dev
           title: GH Action ${{ github.head_ref }} to dev
           body: Automatically created PR after merge to ${{ github.base_ref }}.
-      - name: Check for merge conflicts
-        uses: olivernybroe/action-conflict-finder@v4.0
-        with:
-          base: dev
-          head: ${{ github.head_ref }}-to-dev-gh-action
-      - name: Auto-merge PR to dev
-        uses: pascalgn/automerge-action@v0.15.6
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MERGE_LABELS: auto-merge
-          MERGE_METHOD: squash
-          MERGE_COMMIT_MESSAGE: "Auto PR from ${{ github.head_ref }}"
-          MERGE_FORKS: false
-          UPDATE_LABELS: auto-merge
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
