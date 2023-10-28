@@ -1,0 +1,22 @@
+name: Merge PR to dev
+on:
+  pull_request:
+    types: [opened]
+    branches:
+      - '*-rc'
+
+jobs:
+  merge-pr:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.base.ref === 'dev' && github.actor == 'github-actions' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+      - name: Merge PR
+        uses: devmasx/merge-branch@master
+        with:
+          source_branch: ${{ github.head_ref }}
+          target_branch: dev
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
