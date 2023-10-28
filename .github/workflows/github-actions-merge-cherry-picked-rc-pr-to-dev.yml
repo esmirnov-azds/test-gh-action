@@ -22,5 +22,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.create_pr.outputs.pull_request_number }}
+          merge-method: merge
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
