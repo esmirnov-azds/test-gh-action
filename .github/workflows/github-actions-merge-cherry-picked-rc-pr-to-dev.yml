@@ -1,4 +1,4 @@
-name: On merging *-rc PR create PR to dev
+name: On merging *-rc PR create PR to dev and merges if possible
 on:
   pull_request:
     types: [closed]
@@ -20,3 +20,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HEAD_BRANCH: ${{ github.base_ref }}
           BASE_BRANCH: dev
+      - name: Auto-Merge Pull Request
+        uses: reitermarkus/automerge@v2.6.0
