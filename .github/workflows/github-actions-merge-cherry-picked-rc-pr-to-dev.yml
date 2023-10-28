@@ -1,4 +1,4 @@
-name: On merging *-rc PR create branch and if no conflicts merge to dev
+name: On merging *-rc PR create PR to dev
 on:
   pull_request:
     types: [closed]
@@ -14,13 +14,13 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
+      - name: Create new branch
+        run: |
+          git checkout -b ${{ github.head_ref }}-to-dev-gh-action
+          git push origin ${{ github.head_ref }}-to-dev-gh-action
       - name: Create PR
         uses: poorva17/create-pr-action@v2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEAD_BRANCH: ${{ github.head_ref }}
+          HEAD_BRANCH: ${{ github.head_ref }}-to-dev-gh-action
           BASE_BRANCH: dev
-      - name: Auto-Merge PR
-        uses: reitermarkus/automerge@v2.6.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
