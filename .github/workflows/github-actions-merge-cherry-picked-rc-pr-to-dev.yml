@@ -14,10 +14,9 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-      - name: Create PR to dev
-        uses: peter-evans/create-pull-request@v5
-        with:
-          base: ${{ github.head_ref }}
-          branch: dev
-          title: GH Action ${{ github.head_ref }} to dev
-          body: Automatically created PR after merge to ${{ github.base_ref }}.
+      - name: Create PR
+        uses: poorva17/create-pr-action@2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_BRANCH: ${{ github.base_ref }}
+          BASE_BRANCH: dev
