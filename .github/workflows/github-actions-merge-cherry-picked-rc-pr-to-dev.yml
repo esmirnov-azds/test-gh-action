@@ -18,5 +18,21 @@ jobs:
         uses: poorva17/create-pr-action@v2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEAD_BRANCH: ${{ github.base_ref }}
+          HEAD_BRANCH: ${{ github.head_ref }}
           BASE_BRANCH: dev
+      - name: Check for merge conflicts
+        uses: olivernybroe/action-conflict-finder@v4.0
+        with:
+          base: dev
+          head: ${{ github.head_ref }}
+      - name: Auto-merge PR to dev
+        uses: pascalgn/automerge-action@v0.15.6
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERGE_LABELS: auto-merge
+          MERGE_METHOD: squash
+          MERGE_COMMIT_MESSAGE: "Auto PR from ${{ github.head_ref }}"
+          MERGE_FORKS: false
+          UPDATE_LABELS: auto-merge
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
