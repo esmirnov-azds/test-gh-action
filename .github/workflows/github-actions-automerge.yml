@@ -8,7 +8,7 @@ on:
 jobs:
   merge-pr:
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.base.ref === 'dev' && github.actor == 'github-actions' }}
+    if: ${{ github.event.pull_request.base.ref == 'dev' && github.actor == 'github-actions' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
