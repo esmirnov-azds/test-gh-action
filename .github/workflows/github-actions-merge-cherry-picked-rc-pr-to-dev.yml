@@ -14,13 +14,9 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-      - name: Create new branch
-        run: |
-          git checkout -b ${{ github.head_ref }}-to-dev-gh-action
-          git push origin ${{ github.head_ref }}-to-dev-gh-action
       - name: Create PR
         uses: poorva17/create-pr-action@v2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEAD_BRANCH: ${{ github.head_ref }}-to-dev-gh-action
+          HEAD_BRANCH: ${{ github.base_ref }}
           BASE_BRANCH: dev
