@@ -18,10 +18,8 @@ jobs:
           HEAD_BRANCH: ${{ github.base_ref }}
           BASE_BRANCH: dev
       - name: Enable Pull Request Automerge
-        uses: peter-evans/enable-pull-request-automerge@v3
+        uses: ./.github/actions/azds-merge-action.yml
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
           pull-request-number: ${{ steps.create_pr.outputs.pull_request_number }}
           merge-method: merge
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
