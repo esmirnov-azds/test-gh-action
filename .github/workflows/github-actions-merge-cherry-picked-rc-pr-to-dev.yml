@@ -18,8 +18,7 @@ jobs:
           HEAD_BRANCH: ${{ github.base_ref }}
           BASE_BRANCH: dev
       - name: Enable Pull Request Automerge
-        uses: ./.github/actions/azds-merge-action.yml
-        with:
-          token: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
-          pull-request-number: ${{ steps.create_pr.outputs.pull_request_number }}
-          merge-method: merge
+        shell: bash
+        run: gh pr merge -R "${{ github.repository }}" --merge "${{ steps.create_pr.outputs.pull_request_number }}"
+        env:
+          GH_TOKEN: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
