@@ -17,6 +17,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HEAD_BRANCH: ${{ github.base_ref }}
           BASE_BRANCH: dev
+      - name: Print PR number
+        run: echo "PR number is ${{ steps.create_pr.outputs.pull_request_number }}"
       - name: Merge PR
         run: |
           curl -X PUT -H "Authorization: Bearer ${{ secrets.DEV_BE_GITHUB_TOKEN }}" \
