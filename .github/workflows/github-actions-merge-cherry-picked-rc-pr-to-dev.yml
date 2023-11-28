@@ -19,6 +19,6 @@ jobs:
           BASE_BRANCH: dev
       - name: Enable Pull Request Automerge
         shell: bash
-        run: gh pr merge -R "${{ github.repository }}" --merge "${{ steps.create_pr.outputs.pull_request_number }}"
+        run: gh pr merge -R "${{ github.repository }}" --merge --admin "${{ steps.create_pr.outputs.pull_request_number }}"
         env:
           GH_TOKEN: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
