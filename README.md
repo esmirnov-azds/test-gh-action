@@ -7,3 +7,5 @@ test
 test
 1231
 terterter
+
+  2.6-rc-fix
