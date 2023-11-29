@@ -18,6 +18,6 @@ jobs:
           HEAD_BRANCH: ${{ github.base_ref }}
           BASE_BRANCH: dev
       - name: Merge PR
-        run: gh pr merge --merge --admin "${{ steps.create_pr.outputs.pull_request_number }}"
+        run: gh pr merge --merge --admin
         env:
           GITHUB_TOKEN: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
