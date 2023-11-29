@@ -17,15 +17,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HEAD_BRANCH: ${{ github.base_ref }}
           BASE_BRANCH: dev
-      - name: Get PR number
-        id: get_pr
-        run: |
-          pr_number=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/${{ github.repository }}/pulls?state=open&head=${{ github.repository_owner }}:${{ github.base_ref }}" \
-            | jq '.[0].number')
-          echo "::set-output name=number::$pr_number"
       - name: Merge PR
-        run: |
-          curl -X PUT -H "Authorization: Bearer ${{ secrets.DEV_BE_GITHUB_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.base_ref }}/merge
+        run: gh pr merge --merge --admin "${{ steps.create_pr.outputs.pull_request_number }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
