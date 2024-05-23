@@ -20,7 +20,8 @@ jobs:
           HEAD_BRANCH: ${{ github.base_ref }}
           BASE_BRANCH: dev
       - name: Set BASE_BRANCH env to *-raffles
-        run: echo "BASE_BRANCH=$(echo ${${{ github.base_ref }}%-rc*}-raffles)" >> $GITHUB_ENV
+        run:
+          echo "BASE_BRANCH=$(echo ${github.base_ref%-rc*}-raffles)" >> $GITHUB_ENV
       - name: Create PR to -raffles
         id: create_pr_to_raffles
         uses: poorva17/create-pr-action@v2.0
