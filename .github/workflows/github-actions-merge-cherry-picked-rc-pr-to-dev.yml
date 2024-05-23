@@ -1,22 +1,32 @@
-name: On merging *-rc PR create PR to dev and merges if possible
+name: On merging *-rc PR create rc to dev PR and merge if possible
 on:
   pull_request:
     types: [closed]
+    branches:
+      - '*-rc'
 
 jobs:
   after-rc-merged:
-    if: ${{ contains(github.event.pull_request.base.ref, '-rc') && github.event.pull_request.merged == true }}
+    if: ${{ github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-      - name: Create PR
+      - name: Create PR to dev
         id: create_pr
         uses: poorva17/create-pr-action@v2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HEAD_BRANCH: ${{ github.base_ref }}
           BASE_BRANCH: dev
+      - name: Set BASE_BRANCH env to *-raffles
+        run: echo "BASE_BRANCH=$(echo ${${{ github.base_ref }}%-rc*}-raffles)" >> $GITHUB_ENV
+      - name: Create PR to -raffles
+        id: create_pr
+        uses: poorva17/create-pr-action@v2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_BRANCH: ${{ github.base_ref }}
       - name: Merge PR
         run: gh pr merge --merge --admin
         env:
