@@ -12,23 +12,30 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-      - name: Create PR to dev
-        id: create_pr_to_dev
-        uses: poorva17/create-pr-action@v2.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEAD_BRANCH: ${{ github.base_ref }}
-          BASE_BRANCH: dev
+#      - name: Create PR to dev
+#        id: create_pr_to_dev
+#        uses: poorva17/create-pr-action@v2.0
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          HEAD_BRANCH: ${{ github.base_ref }}
+#          BASE_BRANCH: dev
+#      - name: Merge PR
+#        run: gh pr merge --merge --admin
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
       - name: Set BASE_BRANCH env to *-raffles
+        id: set_base_branch_env
         run:
-          echo "BASE_BRANCH=$(echo ${github.base_ref%-rc*}-raffles)" >> $GITHUB_ENV
+          base_ref=${{ github.base_ref }}
+          echo "BASE_BRANCH=$(echo ${base_ref%-rc*}-raffles)" >> $GITHUB_ENV
       - name: Create PR to -raffles
         id: create_pr_to_raffles
         uses: poorva17/create-pr-action@v2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HEAD_BRANCH: ${{ github.base_ref }}
-      - name: Merge PR
-        run: gh pr merge --merge --admin
-        env:
-          GITHUB_TOKEN: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
+          BASE_BRANCH: ${{ steps.set_base_branch_env.outputs.BASE_BRANCH }}
+#      - name: Merge PR
+#        run: gh pr merge --merge --admin
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
