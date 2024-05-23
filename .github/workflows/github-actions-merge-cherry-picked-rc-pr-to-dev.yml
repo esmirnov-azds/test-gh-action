@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
       - name: Create PR to dev
-        id: create_pr
+        id: create_pr_to_dev
         uses: poorva17/create-pr-action@v2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -22,7 +22,7 @@ jobs:
       - name: Set BASE_BRANCH env to *-raffles
         run: echo "BASE_BRANCH=$(echo ${${{ github.base_ref }}%-rc*}-raffles)" >> $GITHUB_ENV
       - name: Create PR to -raffles
-        id: create_pr
+        id: create_pr_to_raffles
         uses: poorva17/create-pr-action@v2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
