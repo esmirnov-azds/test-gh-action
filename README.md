@@ -1,4 +1,4 @@
 # test-gh-action
 For testing GH Action
 
-test pr to -rc branch
+test pr to -rc branch 2
