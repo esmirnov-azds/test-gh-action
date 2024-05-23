@@ -12,17 +12,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-#      - name: Create PR to dev
-#        id: create_pr_to_dev
-#        uses: poorva17/create-pr-action@v2.0
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          HEAD_BRANCH: ${{ github.base_ref }}
-#          BASE_BRANCH: dev
-#      - name: Merge PR
-#        run: gh pr merge --merge --admin
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
+      - name: Create PR to dev
+        id: create_pr_to_dev
+        uses: poorva17/create-pr-action@v2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_BRANCH: ${{ github.base_ref }}
+          BASE_BRANCH: dev
+      - name: Merge PR
+        run: gh pr merge --merge --admin
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
       - name: Set BASE_BRANCH env to *-raffles
         id: set_base_branch_env
         run:
@@ -33,7 +33,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HEAD_BRANCH: ${{ github.base_ref }}
-#      - name: Merge PR
-#        run: gh pr merge --merge --admin
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
+      - name: Merge PR
+        run: gh pr merge --merge --admin
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEV_BE_GITHUB_TOKEN }}
