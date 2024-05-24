@@ -20,6 +20,7 @@ jobs:
         id: create_pr_to_raffles
         uses: poorva17/create-pr-action@v2.0
         env:
+          GITHUB_REF: ${{ github.head_ref }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HEAD_BRANCH: ${{ github.head_ref }}
       - name: Merge PR
