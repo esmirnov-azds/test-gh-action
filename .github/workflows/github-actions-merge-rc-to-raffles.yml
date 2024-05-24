@@ -10,12 +10,12 @@ jobs:
     if: ${{ contains(github.event.pull_request.head.ref, '-rc') && github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     steps:
+      - name: Set BASE_BRANCH env to *-raffles
+        run: echo "BASE_BRANCH=$(echo ${{ github.head_ref }} | sed 's/\-rc/-raffles/g')" >> $GITHUB_ENV
       - name: Checkout code
         uses: actions/checkout@v4.1.1
         with:
           ref: ${{ github.head_ref }}
-      - name: Set BASE_BRANCH env to *-raffles
-        run: echo "BASE_BRANCH=$(echo ${{ github.head_ref }} | sed 's/\-rc/-raffles/g')" >> $GITHUB_ENV
       - name: Create PR to *-raffles
         id: create_pr_to_raffles
         uses: poorva17/create-pr-action@v2.0
