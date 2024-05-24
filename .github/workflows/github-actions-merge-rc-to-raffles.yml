@@ -12,7 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-        ref: ${{ github.head_ref }}
+        with:
+          ref: ${{ github.head_ref }}
       - name: Set BASE_BRANCH env to *-raffles
         run: echo "BASE_BRANCH=$(echo ${{ github.head_ref }} | sed 's/\-rc/-raffles/g')" >> $GITHUB_ENV
       - name: Create PR to *-raffles
