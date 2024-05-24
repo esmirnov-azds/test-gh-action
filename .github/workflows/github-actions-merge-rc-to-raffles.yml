@@ -18,7 +18,7 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Create PR to *-raffles
         id: create_pr_to_raffles
-        uses: poorva17/create-pr-action@v2.0
+        uses: ../.github/actions/create-pr.sh
         env:
           GITHUB_REF: ${{ github.head_ref }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
