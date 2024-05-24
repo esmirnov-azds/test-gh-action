@@ -12,13 +12,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-      - name: Create PR
-        id: create_pr
+      - name: Set BASE_BRANCH env to *-raffles
+        run: echo "BASE_BRANCH=$(echo ${{ github.head_ref }} | sed 's/\-rc/-raffles/g')" >> $GITHUB_ENV
+      - name: Create PR to *-raffles
+        id: create_pr_to_raffles
         uses: poorva17/create-pr-action@v2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEAD_BRANCH: ${{ github.base_ref }}
-          BASE_BRANCH: dev
+          HEAD_BRANCH: ${{ github.head_ref }}
       - name: Merge PR
         run: gh pr merge --merge --admin
         env:
