@@ -23,6 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           head: ${{ github.head_ref }}
           base: ${{ env.BASE_BRANCH }}
+          title: Merge ${{ github.head_ref }} into ${{ env.BASE_BRANCH }}
       - name: Merge PR
         run: gh pr merge --merge --admin
         env:
