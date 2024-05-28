@@ -18,7 +18,7 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Create PR to *-raffles
         id: create_pr_to_raffles
-        uses: thomaseizinger/create-pull-request
+        uses: thomaseizinger/create-pull-request@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           head: ${{ github.head_ref }}
