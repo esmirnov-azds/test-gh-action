@@ -18,11 +18,11 @@ jobs:
           ref: ${{ github.head_ref }}
       - name: Create PR to *-raffles
         id: create_pr_to_raffles
-        uses: ./.github/actions/create-pr.sh
-        env:
-          GITHUB_REF: ${{ github.head_ref }}
+        uses: thomaseizinger/create-pull-request
+        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEAD_BRANCH: ${{ github.head_ref }}
+          head: ${{ github.head_ref }}
+          base: ${{ env.BASE_BRANCH }}
       - name: Merge PR
         run: gh pr merge --merge --admin
         env:
